@@ -413,8 +413,8 @@
       ],
       "counters": [
         { "n": 5, "prefix": "", "suffix": "+", "label": "sports played & trained" },
-        { "n": 2, "prefix": "", "suffix": "", "label": "leadership roles held" },
-        { "n": 2, "prefix": "", "suffix": "", "label": "boxing competition levels" },
+        { "n": 3, "prefix": "", "suffix": "+", "label": "leadership roles held" },
+        { "n": 5, "prefix": "", "suffix": "+", "label": "boxing competition levels" },
         { "n": 1, "prefix": "C", "suffix": "", "label": "EF SET English level" }
       ]
     },
@@ -464,8 +464,8 @@
       ],
       "counters": [
         { "n": 5, "prefix": "", "suffix": "+", "label": "长期参与的运动项目" },
-        { "n": 2, "prefix": "", "suffix": "", "label": "担任过的负责角色" },
-        { "n": 2, "prefix": "", "suffix": "", "label": "拳击赛事级别" },
+        { "n": 3, "prefix": "", "suffix": "+", "label": "担任过的负责角色" },
+        { "n": 5, "prefix": "", "suffix": "+", "label": "拳击赛事级别" },
         { "n": 1, "prefix": "C", "suffix": "", "label": "EF SET 英语等级" }
       ]
     }
