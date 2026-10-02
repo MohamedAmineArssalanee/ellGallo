@@ -36,13 +36,13 @@
       "https://cdn.phototourl.com/member/2026-10-02-222b35bd-83a5-4b46-9d8c-91f2f1135762.jpg",
       "https://cdn.phototourl.com/member/2026-10-02-54069a1e-e418-4518-8573-830046cacb2f.jpg"
     ],
-   "certificates": [
-  "certificates/csca.pdf",
-  "certificates/EF_SET_Certificate.pdf",
-  "certificates/introductiontobusiness.pdf",
-  "certificates/businesscommunication.pdf",
-  "certificates/box.pdf"
-    ],
+  "certificates": [
+    "data/certificates/csca.pdf",
+    "data/certificates/EF_SET_Certificate.pdf",
+    "data/certificates/introductiontobusiness.pdf",
+    "data/certificates/businesscommunication.pdf",
+    "data/certificates/box.pdf"
+  ],
     "gallery": [
       "REPLACE_WITH_IMAGE_URL",
       "REPLACE_WITH_IMAGE_URL",
