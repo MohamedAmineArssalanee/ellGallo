@@ -189,40 +189,67 @@
     },
 
     /* ---------- certificates ---------- */
-    certificates() {
-      const L = T().labels;
-      $("#certGroups").innerHTML = C()
-        .certificates.map((g, gi) => {
-          const n = g.items.length;
-          const cards = g.items
-            .map((c, ci) => {
-              const tall = n > 2 && ci === 0 ? "tall" : "";
-              const wide = !isPlaceholder(DATA.media.certificates[gi]) && c.wide ? "wide" : "";
-              return `
-              <button class="cert-card ${tall} ${wide}" type="button"
-                      data-lb="certs" data-g="${gi}" data-i="${ci}"
-                      aria-label="Open certificate: ${esc(c.title)}">
-                ${img(DATA.media.certificates[gi], `alt="${esc(c.title)}" ${isPlaceholder(DATA.media.certificates[gi]) ? 'data-pending="true"' : ""}`)}
-                <span class="cert-meta">
-                  <span class="cert-meta-left">
-                    <span class="cert-tag">${esc(c.tag ?? g.title)}</span>
-                    <span class="cert-name">${esc(c.title)}</span>
-                    ${c.issuer ? `<span class="cert-issuer">${esc(c.issuer)}</span>` : ""}
-                  </span>
-                </span>
-              </button>`;
-            })
-            .join("");
+  certificates() {
+  const L = T().labels;
+  let certIndex = 0;
+
+  $("#certGroups").innerHTML = C()
+    .certificates.map((g) => {
+      const n = g.items.length;
+
+      const cards = g.items
+        .map((c, ci) => {
+          const pdfUrl = DATA.media.certificates[certIndex++];
+
+          const tall = n > 2 && ci === 0 ? "tall" : "";
+          const wide = c.wide ? "wide" : "";
+
           return `
-          <div class="cert-group" data-reveal>
-            <div class="cert-group-head">
-              <h3 class="cg-title">${esc(g.title)}</h3>
-              <span class="cg-count">${n} ${n === 1 ? L.item : L.items}</span>
-            </div>
-            <div class="cg-grid">${cards}</div>
-          </div>`;
+            <button class="cert-card ${tall} ${wide}" type="button"
+                    data-cert-pdf="${esc(pdfUrl)}"
+                    aria-label="Open certificate: ${esc(c.title)}">
+
+              <div class="cert-pdf-preview">
+                <span class="cert-pdf-icon">PDF</span>
+                <span class="cert-pdf-text">Open Certificate</span>
+              </div>
+
+              <span class="cert-meta">
+                <span class="cert-meta-left">
+                  <span class="cert-tag">${esc(c.tag ?? g.title)}</span>
+                  <span class="cert-name">${esc(c.title)}</span>
+                  ${c.issuer ? `<span class="cert-issuer">${esc(c.issuer)}</span>` : ""}
+                </span>
+              </span>
+
+            </button>`;
         })
         .join("");
+
+      return `
+        <div class="cert-group" data-reveal>
+          <div class="cert-group-head">
+            <h3 class="cg-title">${esc(g.title)}</h3>
+            <span class="cg-count">${n} ${n === 1 ? L.item : L.items}</span>
+          </div>
+          <div class="cg-grid">${cards}</div>
+        </div>`;
+    })
+    .join("");
+},
+        .join("");
+
+      return `
+        <div class="cert-group" data-reveal>
+          <div class="cert-group-head">
+            <h3 class="cg-title">${esc(g.title)}</h3>
+            <span class="cg-count">${n} ${n === 1 ? L.item : L.items}</span>
+          </div>
+          <div class="cg-grid">${cards}</div>
+        </div>`;
+    })
+    .join("");
+},
     },
 
     /* ---------- gallery ---------- */
@@ -528,28 +555,24 @@
     });
 
     document.addEventListener("click", (e) => {
-      const trigger = e.target.closest("[data-lb]");
-      if (!trigger) return;
-      if (trigger.dataset.lb === "gallery") {
-        const items = C().gallery.map((g, i) => ({
-          image: DATA.media.gallery[i],
-          title: g.caption ?? g.category,
-          category: g.category,
-          alt: g.alt ?? g.caption,
-        }));
-        openLightbox(items, Number(trigger.dataset.i));
-      } else if (trigger.dataset.lb === "certs") {
-        const g = Number(trigger.dataset.g);
-        const items = C().certificates[g].items.map((c) => ({
-          image: DATA.media.certificates[g],
-          title: c.title,
-          issuer: c.issuer ?? C().certificates[g].title,
-          alt: c.title,
-        }));
-        openLightbox(items, Number(trigger.dataset.i));
-      }
-    });
+  const trigger = e.target.closest("[data-lb], [data-cert-pdf]");
+  if (!trigger) return;
+
+  if (trigger.dataset.lb === "gallery") {
+    const items = C().gallery.map((g, i) => ({
+      image: DATA.media.gallery[i],
+      title: g.caption ?? g.category,
+      category: g.category,
+      alt: g.alt ?? g.caption,
+    }));
+
+    openLightbox(items, Number(trigger.dataset.i));
   }
+
+  if (trigger.dataset.certPdf) {
+    openCvViewer(trigger.dataset.certPdf);
+  }
+});
 
   /* ==================================================================== *
    *  CV VIEWER
